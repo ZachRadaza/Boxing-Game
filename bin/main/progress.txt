@@ -1,0 +1,25 @@
+file will keep track of the work I do on the project daily
+
+5/25/25
+ - first created game
+ - made game loop and threads
+ - made sprite, spriteInto, vector2D, player
+ - made key handler
+ - character was able to move all four directions and displayed on screen
+5/26/25
+ - created mouse and cursor handler to handle mouse inputs and make different stances possible
+ - made actions helper class to control all input and affect the character
+ - did not know if cursor handler and mouse handler worked as they could not be tested
+5/27/25
+ - Created test/placeholder Sprites to test if everything was working well
+ - everything worked just fine the first try, I AM COOL
+ - added dash system and changed w and s from moving up and down into dashes
+5/30/25
+ - Created character sprite from chatgpt and added to game file
+5/31/25
+ - Edited size of sprite to match screen
+ - added temporary stance indicator
+ - added player package containing player, player stance icon, and hopefully health bar, stamina, and name in the future
+ - added only being able to temporarily be in a stance, returning it to base after a certain amount of time
+ 
+ 
