@@ -10,9 +10,6 @@ import input.Actions;
 import input.CursorHandler;
 import input.KeyHandler;
 import input.MouseHandler;
-import sprites.Player;
-import sprites.Sprite;
-import sprites.Vector2D;
 
 public class GamePanel extends JPanel implements Runnable{
 	
@@ -24,8 +21,8 @@ public class GamePanel extends JPanel implements Runnable{
 	private static final long serialVersionUID = 1L;
 	
 	//for the panel
-	private final int width = Main.getFrame().getWidth();
-	private final int height = Main.getFrame().getHeight();
+	public final int width = Main.getFrame().getWidth();
+	public final int height = Main.getFrame().getHeight();
 	private int fps = 100;
 	
 	//game fields
@@ -35,8 +32,7 @@ public class GamePanel extends JPanel implements Runnable{
 	private Thread gameThread;
 	
 	//player fields
-	private Sprite[] playerSprite;
-	private Player player;
+	private PlayerPackage player1;
 
 	public GamePanel(){
 		this.setPreferredSize(new Dimension(width, height));
@@ -51,11 +47,9 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		this.addMouseListener(mouseHandler);
 		
-		setPlayerSprite();
-		
-		player = new Player(new Vector2D(100, 100), playerSprite, 128, 128);
-		player.setBounds(player.getVector2D().getX(), player.getVector2D().getY(), this.width, this.height);
-		this.add(player);
+		player1 = new PlayerPackage();
+		//player1.setBounds(0, 0, this.width, this.height);
+		this.add(player1);
 		
 		startGameThread();
 	}
@@ -105,7 +99,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//updates every second
 	private void update(){
-		Actions.action(player, keyHandler, cursorHandler, mouseHandler);
+		Actions.action(player1, keyHandler, cursorHandler, mouseHandler);
 	}
 	
 	//repaints everything every second
@@ -117,14 +111,6 @@ public class GamePanel extends JPanel implements Runnable{
 	//loads everthing at the start
 	private void start(){
 		
-	}
-	
-	private void setPlayerSprite(){
-		playerSprite = new Sprite[8];
-		for(int i = 0; i < playerSprite.length; i++){
-			int num = i + 1;
-			playerSprite[i] = new Sprite("Art/PlayerSpriteLeft/test" + num + "1.png", "Art/PlayerSpriteLeft/test"  + num + "2.png", "Art/PlayerSpriteLeft/test" + num + "3.png");
-		}
 	}
 	
 }

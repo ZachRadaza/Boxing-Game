@@ -10,13 +10,17 @@ public class Player extends SpriteInfo{
 	private Sprite[] sprite;
 	
 	//for states
-	private int state; //state is the position the boxer is in, + 1 is guard, 0 = standard, 2 = duck, 4 = left weave, 6 right
+	private int stance; //state is the position the boxer is in, + 1 is guard, 0 = standard, 2 = duck, 4 = left weave, 6 right
+	private int stanceLast; //last state player was in
+	private stopWatchX stanceL; //how long they can be in that state
 	
+	//movement
 	private boolean canMove; //if player can move
 	private boolean canDash; //if playey can dash
 	private boolean dashDir; //direction of dash
 	private stopWatchX dashCD; //timer for dash, true for forwards
 	private stopWatchX dashL; //dash length, how long they will be dashing for
+	
 	private int punch; //if player is punching, 0 for not, 1 for lead hand, 2 for rear
 	private boolean block;
 	private boolean dodge;
@@ -28,7 +32,12 @@ public class Player extends SpriteInfo{
 		super(vector2D, sprite[0], width, height);
 		
 		this.sprite = sprite;
-		this.state = 0;
+		
+		this.stance = 0;
+		this.stanceLast = stance;
+		this.stanceL = new stopWatchX(2000);
+		
+		
 		this.canMove = true;
 		this.canDash = true;
 		this.dashDir = false;
@@ -40,8 +49,16 @@ public class Player extends SpriteInfo{
 		
 	}
 	
-	public int getState(){
-		return state;
+	public int getStance(){
+		return stance;
+	}
+	
+	public int getStanceLast(){
+		return stanceLast;
+	}
+	
+	public boolean getStanceL(){
+		return stanceL.isTimeUp();
 	}
 	
 	public boolean getBlock(){
@@ -69,9 +86,15 @@ public class Player extends SpriteInfo{
 	}
 	
 	
-	public void setState(int i){
-		state = i;
+	public void setStance(int i){
+		stance = i;
+		if(!stanceL.isTimeUp()) stanceLast = stance;
+		stanceL.resetWatch();
 		setSprite(sprite[i]);
+	}
+	
+	public void resetStateL(){
+		stanceL.resetWatch();
 	}
 	
 	public void setBlock(boolean b){

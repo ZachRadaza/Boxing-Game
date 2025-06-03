@@ -25,6 +25,16 @@ public class Sprite{
 		this.stopWatch = new stopWatchX(300);
 	}
 	
+	public Sprite(String image1){
+		image = new String[4];
+		for(int i = 0; i < image.length; i++){
+			image[i] = image1;
+		}
+		
+		this.index = 0;
+		this.stopWatch = new stopWatchX(300);
+	}
+	
 	public BufferedImage getImage(){
 		try {
 			if(stopWatch.isTimeUp()){

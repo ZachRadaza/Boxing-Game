@@ -1,19 +1,21 @@
 package input;
 
+import main.PlayerPackage;
 import sprites.Player;
 
 public class Actions{
 	
-	
-	public static void action(Player player, KeyHandler keyHandler, CursorHandler cursorHandler, MouseHandler mouseHandler){
-		movement(player, keyHandler);
-		state(player, cursorHandler);
-		block(player, keyHandler);
-		punch(player, mouseHandler);
+	public static void action(PlayerPackage playerPackage, KeyHandler keyHandler, CursorHandler cursorHandler, MouseHandler mouseHandler){
+		
+		movement(playerPackage, keyHandler);
+		state(playerPackage, cursorHandler);
+		block(playerPackage, keyHandler);
+		punch(playerPackage, mouseHandler);
 		
 	}
 	
-	private static void movement(Player player, KeyHandler keyHandler){
+	private static void movement(PlayerPackage playerPackage, KeyHandler keyHandler){
+		Player player = playerPackage.getPlayer();
 		int x = player.getVector2D().getX();
 		int y = player.getVector2D().getY();
 		
@@ -42,25 +44,36 @@ public class Actions{
 		if(keyHandler.getLeft()) player.updateCoords(x - 2, y);
 	}
 	
-	private static void block(Player player, KeyHandler keyHandler){
+	private static void block(PlayerPackage playerPackage, KeyHandler keyHandler){
+		Player player = playerPackage.getPlayer();
 		boolean blockK = keyHandler.getBlock();
 		boolean blockP = player.getBlock();
+		
 		if(blockK && !blockP){ 
-			player.setState(player.getState() + 1);
+			playerPackage.setStance(player.getStance() + 1);
 			player.setBlock(true);
 		}
 		else if(!blockK && blockP){ 
-			player.setState(player.getState() - 1);
-			player.setBlock(false);
+			if(player.getStance() != 0) {
+				playerPackage.setStance(player.getStance() - 1);
+				player.setBlock(false);
+			}
 		}
 	}
 	
-	private static void state(Player player, CursorHandler cursorHandler){
-		if(!player.getBlock()) player.setState(cursorHandler.getState() * 2);
-		else player.setState((cursorHandler.getState() * 2) + 1);
+	private static void state(PlayerPackage playerPackage, CursorHandler cursorHandler){
+		Player player = playerPackage.getPlayer();
+		int handlerState = cursorHandler.getState() * 2;
+		
+		if(player.getStanceL() && player.getStance() > 1) playerPackage.setStance(0); //so they can stay at a state for too long, except block at standard
+		
+		if(!player.getBlock() && (player.getStanceLast() != handlerState)) playerPackage.setStance(handlerState);
+		else if (player.getBlock() && (player.getStanceLast() != handlerState + 1)) playerPackage.setStance(handlerState + 1);
 	}
 	
-	private static void punch(Player player, MouseHandler mouseHandler){
+	private static void punch(PlayerPackage playerPackage, MouseHandler mouseHandler){
+		Player player = playerPackage.getPlayer();
+		
 		if(mouseHandler.getLeftClick()) player.setPunch(1);
 		else if(mouseHandler.getRightClick()) player.setPunch(2);
 		else player.setPunch(0);
