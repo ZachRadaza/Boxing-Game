@@ -21,5 +21,13 @@ file will keep track of the work I do on the project daily
  - added temporary stance indicator
  - added player package containing player, player stance icon, and hopefully health bar, stamina, and name in the future
  - added only being able to temporarily be in a stance, returning it to base after a certain amount of time
- 
- 
+ 6/2/25
+ - added punching sprites
+ - added collision box for punches, attempted atleast
+ - adjusted collision box for each stance
+ - fixed bugs around mouse and cursor inputs
+ - removed mouse listener and added it to cursor listener
+ 6/3/25
+ - fixed stance icon not punching
+ - fixed punching hitbox and added collision to opponent
+ - added collision to not walk through opponent, added body class

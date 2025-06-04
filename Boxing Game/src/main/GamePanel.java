@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import input.Actions;
 import input.CursorHandler;
 import input.KeyHandler;
-import input.MouseHandler;
 
 public class GamePanel extends JPanel implements Runnable{
 	
@@ -28,11 +27,11 @@ public class GamePanel extends JPanel implements Runnable{
 	//game fields
 	private KeyHandler keyHandler = new KeyHandler();
 	private CursorHandler cursorHandler = new CursorHandler();
-	private MouseHandler mouseHandler = new MouseHandler();
 	private Thread gameThread;
 	
 	//player fields
 	private PlayerPackage player1;
+	private PlayerPackage player2;
 
 	public GamePanel(){
 		this.setPreferredSize(new Dimension(width, height));
@@ -45,11 +44,11 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		this.add(cursorHandler);
 		
-		this.addMouseListener(mouseHandler);
-		
-		player1 = new PlayerPackage();
-		//player1.setBounds(0, 0, this.width, this.height);
+		player1 = new PlayerPackage(true);
 		this.add(player1);
+		
+		player2 = new PlayerPackage(false);
+		this.add(player2);
 		
 		startGameThread();
 	}
@@ -99,7 +98,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//updates every second
 	private void update(){
-		Actions.action(player1, keyHandler, cursorHandler, mouseHandler);
+		Actions.action(player1, keyHandler, cursorHandler, player2);
 	}
 	
 	//repaints everything every second

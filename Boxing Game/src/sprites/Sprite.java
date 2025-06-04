@@ -35,6 +35,17 @@ public class Sprite{
 		this.stopWatch = new stopWatchX(300);
 	}
 	
+	public Sprite(String image1, String image2){
+		image = new String[4];
+		image[0] = image1;
+		image[1] = image2;
+		image[2] = image2;
+		image[3] = image1;
+		
+		this.index = 0;
+		this.stopWatch = new stopWatchX(70);
+	}
+	
 	public BufferedImage getImage(){
 		try {
 			if(stopWatch.isTimeUp()){
@@ -49,6 +60,10 @@ public class Sprite{
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public void resetStopWatch(){
+		stopWatch.resetWatch();
 	}
 
 }

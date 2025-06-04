@@ -13,7 +13,10 @@ public class CursorHandler extends JPanel{
 	private static final long serialVersionUID = 1L;
 	
 	private JPanel[] panels;
-	private boolean[] states; //middle, bottom, left, right
+	private boolean[] stances; //middle, bottom, left, right
+	
+	private boolean leftClick = false;
+	private boolean rightClick = false;
 	
 	public CursorHandler(){
 		this.setOpaque(false);
@@ -24,8 +27,8 @@ public class CursorHandler extends JPanel{
 	}
 	
 	private void setPanels(){
-		states = new boolean[4];
-		for(int i = 0; i < states.length; i++) states[i] = false;
+		stances = new boolean[4];
+		for(int i = 0; i < stances.length; i++) stances[i] = false;
 		
 		panels = new JPanel[4];
 		
@@ -49,31 +52,59 @@ public class CursorHandler extends JPanel{
 			public void mouseClicked(MouseEvent e) {}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				states[i] = true;
+				stances[i] = true;
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				states[i] = false;
+				stances[i] = false;
 				
 			}
 			
 			@Override
-			public void mousePressed(MouseEvent e) {}
+			public void mousePressed(MouseEvent e) {
+				int click = e.getButton();
+				switch(click){
+				case MouseEvent.BUTTON1:
+					leftClick = true;
+					break;
+				case MouseEvent.BUTTON3:
+					rightClick = true;
+					break;
+				}
+			}
 			@Override
-			public void mouseReleased(MouseEvent e) {}
+			public void mouseReleased(MouseEvent e) {
+				int click = e.getButton();
+				switch(click){
+				case MouseEvent.BUTTON1:
+					leftClick = false;
+					break;
+				case MouseEvent.BUTTON3:
+					rightClick = false;
+					break;
+				}
+			}
 		};
 		return ret;
 	}
 	//return current state since only one can be true
-	public int getState(){
+	public int getStance(){
 		int ret = 0;
-		for(int i = 0; i < states.length; i++){
-			if(states[i]){
+		for(int i = 0; i < stances.length; i++){
+			if(stances[i]){
 				ret = i;
 				break;
 			}
 		}
 		return ret;
+	}
+	
+	public boolean getLeftClick(){
+		return leftClick;
+	}
+	
+	public boolean getRightClick(){
+		return rightClick;
 	}
 }

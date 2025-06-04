@@ -12,6 +12,7 @@ public class CollisionBox{
 	private int height;
 	
 	boolean collision;
+	boolean active; //if hitbox should be active or not
 	
 	public CollisionBox(Vector2D vector, int width, int height){
 		x1 = vector.getX();
@@ -21,6 +22,7 @@ public class CollisionBox{
 		this.width = width;
 		this.height = height;
 		collision = false;
+		active = true;
 	}
 	
 	public int getX1(){
@@ -37,6 +39,14 @@ public class CollisionBox{
 	
 	public int getY2(){
 		return y2;
+	}
+	
+	public int getHeight(){
+		return height;
+	}
+	
+	public int getWidth(){
+		return width;
 	}
 	
 	public boolean getCollision(){
@@ -59,8 +69,20 @@ public class CollisionBox{
 		this.y2 = y2;
 	}
 	
+	public void setWidth(int w){
+		width = w;
+	}
+	
+	public void setHeight(int h){
+		height = h;
+	}
+	
 	public void setCollision(boolean c){
 		collision = c;
+	}
+	
+	public void setActive(boolean a){
+		active = a;
 	}
 	
 	public void adjustCoords(Vector2D vector){
@@ -71,7 +93,8 @@ public class CollisionBox{
 	}
 	
 	public boolean collisionDetection(CollisionBox object){
-		if((this.x1 < object.getX2()) &&
+		if(active &&
+			(this.x1 < object.getX2()) &&
 			(this.x2 > object.getX1()) &&
 			(this.y1 < object.getY2()) &&
 			(this.y2 > object.getY1())){

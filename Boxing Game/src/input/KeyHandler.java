@@ -11,28 +11,32 @@ public class KeyHandler implements KeyListener{
 	private boolean left = false;
 	
 	private boolean block = false;
+	private boolean shift = false;
 	
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
-		char key = arg0.getKeyChar();
+		int key = arg0.getKeyCode();
 		
 		switch(key){
-		case 'w':
+		case KeyEvent.VK_W:
 			up = true;
 			break;
-		case 's':
+		case KeyEvent.VK_S:
 			down = true;
 			break;
-		case 'd':
+		case KeyEvent.VK_D:
 			right = true;
 			break;
-		case 'a':
+		case KeyEvent.VK_A:
 			left = true;
 			break;
-		case ' ':
+		case KeyEvent.VK_SPACE:
 			block = true;
+			break;
+		case KeyEvent.VK_SHIFT:
+			shift = true;
 			break;
 		}
 	}
@@ -40,23 +44,26 @@ public class KeyHandler implements KeyListener{
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		char key = arg0.getKeyChar();
+		int key = arg0.getKeyCode();
 		
 		switch(key){
-		case 'w':
+		case KeyEvent.VK_W:
 			up = false;
 			break;
-		case 's':
+		case KeyEvent.VK_S:
 			down = false;
 			break;
-		case 'd':
+		case KeyEvent.VK_D:
 			right = false;
 			break;
-		case 'a':
+		case KeyEvent.VK_A:
 			left = false;
 			break;
-		case ' ':
+		case KeyEvent.VK_SPACE:
 			block = false;
+			break;
+		case KeyEvent.VK_SHIFT:
+			shift = false;
 			break;
 		}
 	}
@@ -87,5 +94,9 @@ public class KeyHandler implements KeyListener{
 	
 	public boolean getBlock(){
 		return block;
+	}
+	
+	public boolean getShift(){
+		return shift;
 	}
 }
