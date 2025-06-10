@@ -19,26 +19,12 @@ public class KeyHandler implements KeyListener{
 		
 		int key = arg0.getKeyCode();
 		
-		switch(key){
-		case KeyEvent.VK_W:
-			up = true;
-			break;
-		case KeyEvent.VK_S:
-			down = true;
-			break;
-		case KeyEvent.VK_D:
-			right = true;
-			break;
-		case KeyEvent.VK_A:
-			left = true;
-			break;
-		case KeyEvent.VK_SPACE:
-			block = true;
-			break;
-		case KeyEvent.VK_SHIFT:
-			shift = true;
-			break;
-		}
+		if(key == KeyEvent.VK_W) up = true;
+		if(key == KeyEvent.VK_S) down = true;
+		if(key == KeyEvent.VK_D) right = true;
+		if(key == KeyEvent.VK_A) left = true;
+		if(key == KeyEvent.VK_SPACE) block = true;
+		if(key == KeyEvent.VK_SHIFT) shift = true;
 	}
 
 	@Override
@@ -46,26 +32,12 @@ public class KeyHandler implements KeyListener{
 		// TODO Auto-generated method stub
 		int key = arg0.getKeyCode();
 		
-		switch(key){
-		case KeyEvent.VK_W:
-			up = false;
-			break;
-		case KeyEvent.VK_S:
-			down = false;
-			break;
-		case KeyEvent.VK_D:
-			right = false;
-			break;
-		case KeyEvent.VK_A:
-			left = false;
-			break;
-		case KeyEvent.VK_SPACE:
-			block = false;
-			break;
-		case KeyEvent.VK_SHIFT:
-			shift = false;
-			break;
-		}
+		if(key == KeyEvent.VK_W) up = false;
+		if(key == KeyEvent.VK_S) down = false;
+		if(key == KeyEvent.VK_D) right = false;
+		if(key == KeyEvent.VK_A) left = false;
+		if(key == KeyEvent.VK_SPACE) block = false;
+		if(key == KeyEvent.VK_SHIFT) shift = false;
 	}
 
 	@Override

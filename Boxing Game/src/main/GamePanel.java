@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import input.Actions;
 import input.CursorHandler;
 import input.KeyHandler;
+import input.KeyHandler2Player;
 
 public class GamePanel extends JPanel implements Runnable{
 	
@@ -26,24 +27,32 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//game fields
 	private KeyHandler keyHandler = new KeyHandler();
+	private KeyHandler2Player keyHandler2Player = new KeyHandler2Player();
 	private CursorHandler cursorHandler = new CursorHandler();
 	private Thread gameThread;
+	private boolean singlePlayer;
 	
 	//player fields
 	private PlayerPackage player1;
 	private PlayerPackage player2;
 
-	public GamePanel(){
+	public GamePanel(boolean singlePlayer){
 		this.setPreferredSize(new Dimension(width, height));
 		this.setLayout(null);
 		this.setBackground(Color.BLACK);
 		this.setDoubleBuffered(true);
 		
-		this.addKeyListener(keyHandler);
+		this.singlePlayer = singlePlayer;
+		
+		if(singlePlayer){
+			this.addKeyListener(keyHandler);
+			this.add(cursorHandler);
+		} else {
+			this.addKeyListener(keyHandler2Player);
+			this.setFocusable(true);
+		}
 		this.setFocusable(true);
-		
-		this.add(cursorHandler);
-		
+
 		player1 = new PlayerPackage(true);
 		this.add(player1);
 		
@@ -98,7 +107,11 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//updates every second
 	private void update(){
-		Actions.action(player1, keyHandler, cursorHandler, player2);
+		if(singlePlayer) Actions.action(player1, keyHandler, cursorHandler, player2);
+		else{
+			Actions.action(player1, keyHandler2Player, player2, 0);
+			Actions.action(player2, keyHandler2Player, player1, 1);
+		}
 	}
 	
 	//repaints everything every second

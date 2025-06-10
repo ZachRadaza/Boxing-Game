@@ -31,3 +31,7 @@ file will keep track of the work I do on the project daily
  - fixed stance icon not punching
  - fixed punching hitbox and added collision to opponent
  - added collision to not walk through opponent, added body class
+ 6/9/25
+ - added functioning health and stamina bars at the top
+ - added two players with keybinds
+ - fixed stance not going back up after timer bug

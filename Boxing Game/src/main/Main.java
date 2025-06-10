@@ -8,11 +8,10 @@ public class Main{
 	
 	public static void main(String[] args){
 		setFrame();
-		
 	}
 	
 	private static Frame setFrame(){
-		GamePanel panel = new GamePanel();
+		GamePanel panel = new GamePanel(false);
 		frame.add(panel);
 		
 		return frame;
