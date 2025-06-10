@@ -77,6 +77,8 @@ public class Actions{
 			if(!player.getBlock() && (player.getStanceLast() != handlerState)) playerPackage.setStance(handlerState);
 			else if (player.getBlock() && (player.getStanceLast() != handlerState + 1)) playerPackage.setStance(handlerState + 1);
 		}
+		
+		player.adjustStamina(player.getStaminaRegen());
 	}
 	
 	private static void punch(PlayerPackage playerPackage, CursorHandler cursorHandler, KeyHandler keyHandler, PlayerPackage opponent){
@@ -108,9 +110,14 @@ public class Actions{
 			}
 			
 			if(player.getPunchL()) playerPackage.setStance(player.getStance() + i);
-			player.setPunch(i);
 			
-			if(player.getHands().collisionDetection(opponent.getPlayer().getColBox())){ opponent.getPlayer().adjustHealth(-damage);
+			player.setPunch(i);
+			playerPackage.adjustStamina();
+			System.out.println(player.getStamina());
+			
+			if(player.getHands().collisionDetection(opponent.getPlayer().getColBox())){ 
+				opponent.getPlayer().adjustHealth(-damage);
+				opponent.adjustHealth();
 				System.out.println("hit");
 			}
 		}

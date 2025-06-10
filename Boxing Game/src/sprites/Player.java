@@ -34,8 +34,8 @@ public class Player extends SpriteInfo{
 	
 	//other stuff
 	public int health;
-	public int stamina;
-	public double staminaRegen; //rate stamina regenerates
+	public float stamina;
+	public float staminaRegen; //rate stamina regenerates
 	
 	public Player(Vector2D vector2D, Sprite[] sprite, int width, int height){ //change sprite when changing states
 		super(vector2D, sprite[0], width, height);
@@ -61,9 +61,9 @@ public class Player extends SpriteInfo{
 		this.block = false;
 		this.dodge = false;
 		
-		this.health = 100;
-		this.stamina = 100;
-		this.staminaRegen = 1.00;
+		this.health = 80;
+		this.stamina = 80f;
+		this.staminaRegen = 0.01f;
 		
 	}
 	
@@ -119,11 +119,11 @@ public class Player extends SpriteInfo{
 		return health;
 	}
 	
-	public int getStamina(){
+	public float getStamina(){
 		return stamina;
 	}
 	
-	public double getStaminaRegen(){
+	public float getStaminaRegen(){
 		return staminaRegen;
 	}
 	
@@ -182,7 +182,7 @@ public class Player extends SpriteInfo{
 		this.stamina = stamina;
 	}
 	
-	public void setStaminaRegen(double staminaRegen){
+	public void setStaminaRegen(float staminaRegen){
 		this.staminaRegen = staminaRegen;
 	}
 	
@@ -190,8 +190,9 @@ public class Player extends SpriteInfo{
 		health += ad;
 	}
 	
-	public void adjustStamina(int ad){
-		stamina += ad;
+	public void adjustStamina(float ad){
+		if(ad > 0 && stamina < 80) stamina += ad;
+		else if(ad < 0 && stamina <= 80) stamina += ad;
 	}
 	
 	public void adjustStaminaRegen(double ad){

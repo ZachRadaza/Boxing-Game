@@ -16,6 +16,10 @@ public class PlayerPackage extends JPanel{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private boolean playerLeft;
+	
+	private SpriteInfo[] frameIcons; //frame, health, stamina
+	
 	private Sprite[] playerSprite;
 	private Player player;
 	
@@ -28,15 +32,19 @@ public class PlayerPackage extends JPanel{
 		this.setLayout(null);
 		this.setBounds(0, 0, 1920, 1080);
 		this.setPreferredSize(new Dimension(1920, 1080));
-
-		iniSprites();
+		
+		this.playerLeft = playerLeft;
 		
 		if(playerLeft){
+			iniSprites(1);
 			player = new Player(new Vector2D(350, 400), playerSprite, 175, 500);
 			stanceIcon = new SpriteInfo(new Vector2D(450, 300), stanceSprite[0]);
+			iniFrameIcons(1);
 		} else {
+			iniSprites(2);
 			player = new Player(new Vector2D(994, 400), playerSprite, 175, 500);
-			stanceIcon = new SpriteInfo(new Vector2D(1094, 300), stanceSprite[0]);
+			stanceIcon = new SpriteInfo(new Vector2D(1920 - 450 - 300, 300), stanceSprite[0]);
+			iniFrameIcons(2);
 		}
 		
 		player.setBounds(0, 0, this.getWidth(), this.getHeight());
@@ -47,15 +55,21 @@ public class PlayerPackage extends JPanel{
 		this.setVisible(true);
 	}
 	
-	private void iniSprites(){
+	private void iniSprites(int playerNumber){ //1 or 2
 		playerSprite = new Sprite[32];
 		int temp = 0;
+		
+		playerNumber--;
+		String[] ori = {"Left", "Right"};
+		
 		for(int i = 0; i < playerSprite.length; i++){
 			int num = i + 1;
 			
 			if(temp == 8) temp = 0;
-			if(temp == 0 || temp == 1) playerSprite[i] = new Sprite("Art/PlayerSpriteLeft/BoxerLeft" + num + "1.png", "Art/PlayerSpriteLeft/BoxerLeft"  + num + "2.png", "Art/PlayerSpriteLeft/BoxerLeft" + num + "3.png");
-			else playerSprite[i] = new Sprite("Art/PlayerSpriteLeft/BoxerLeft" + num + "1.png", "Art/PlayerSpriteLeft/BoxerLeft" + num + "2.png");
+			if(temp == 0 || temp == 1) playerSprite[i] = new Sprite("Art/PlayerSprite" + ori[playerNumber] + "/Boxer" + ori[playerNumber] + num + "1.png", 
+					"Art/PlayerSprite" + ori[playerNumber] + "/Boxer" + ori[playerNumber] + num + "2.png", 
+					"Art/PlayerSprite" + ori[playerNumber] + "/Boxer" + ori[playerNumber] + num + "3.png");
+			else playerSprite[i] = new Sprite("Art/PlayerSprite" + ori[playerNumber] + "/Boxer" + ori[playerNumber] + num + "1.png", "Art/PlayerSprite" + ori[playerNumber] + "/Boxer" + ori[playerNumber] + num + "2.png");
 			
 			temp++;
 		}
@@ -63,6 +77,40 @@ public class PlayerPackage extends JPanel{
 		stanceSprite = new Sprite[32];
 		for(int i = 0; i < stanceSprite.length; i++){
 			stanceSprite[i] = new Sprite("Art/StanceIcon/stance" + (i + 1) + ".png");
+		}
+	}
+	
+	private void iniFrameIcons(int playerNumber){
+		int x = 50;
+		if(playerNumber == 2) x = 1920 - 896 - x;
+		
+		frameIcons = new SpriteInfo[3];
+		String[] names = {"Frame", "Health", "Stamina"};
+		for(int i = 0; i < frameIcons.length; i++){
+			frameIcons[i] = new SpriteInfo(new Vector2D(0, 0), new Sprite("Art/FrameSprites/Player" + playerNumber + names[i] + ".png"));
+			frameIcons[i].setBounds(x, 0, 1000, 500);
+			this.add(frameIcons[i]);
+		}
+
+	}
+	
+	public void adjustHealth(){
+		int size = 40 + (player.getHealth() * 10);
+		if(playerLeft){
+			frameIcons[1].setBounds(50, 0, size, 500);
+		} else {
+			int x = (1920 - 896 - 50) + (840 - player.getHealth() * 10);
+			frameIcons[1].setBounds(x, 0, size, 500);
+		}
+	}
+	
+	public void adjustStamina(){
+		int size = 40 + (((int) player.getStamina()) * 10);
+		if(playerLeft){
+			frameIcons[2].setBounds(50, 0, size, 500);
+		} else {
+			int x = (1920 - 896 - 50) + (840 - ((int) player.getStamina()) * 10);
+			frameIcons[2].setBounds(x, 0, size, 500);
 		}
 	}
 	
