@@ -20,11 +20,11 @@ public class KeyHandler implements KeyListener{
 		int key = arg0.getKeyCode();
 		
 		if(key == KeyEvent.VK_W) up = true;
-		if(key == KeyEvent.VK_S) down = true;
-		if(key == KeyEvent.VK_D) right = true;
-		if(key == KeyEvent.VK_A) left = true;
-		if(key == KeyEvent.VK_SPACE) block = true;
-		if(key == KeyEvent.VK_SHIFT) shift = true;
+		else if(key == KeyEvent.VK_S) down = true;
+		else if(key == KeyEvent.VK_D) right = true;
+		else if(key == KeyEvent.VK_A) left = true;
+		else if(key == KeyEvent.VK_SPACE) block = true;
+		else if(key == KeyEvent.VK_SHIFT) shift = true;
 	}
 
 	@Override
@@ -33,11 +33,11 @@ public class KeyHandler implements KeyListener{
 		int key = arg0.getKeyCode();
 		
 		if(key == KeyEvent.VK_W) up = false;
-		if(key == KeyEvent.VK_S) down = false;
-		if(key == KeyEvent.VK_D) right = false;
-		if(key == KeyEvent.VK_A) left = false;
-		if(key == KeyEvent.VK_SPACE) block = false;
-		if(key == KeyEvent.VK_SHIFT) shift = false;
+		else if(key == KeyEvent.VK_S) down = false;
+		else if(key == KeyEvent.VK_D) right = false;
+		else if(key == KeyEvent.VK_A) left = false;
+		else if(key == KeyEvent.VK_SPACE) block = false;
+		else if(key == KeyEvent.VK_SHIFT) shift = false;
 	}
 
 	@Override

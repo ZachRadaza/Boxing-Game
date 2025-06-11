@@ -37,13 +37,13 @@ public class PlayerPackage extends JPanel{
 		
 		if(playerLeft){
 			iniSprites(1);
+			stanceIcon = new SpriteInfo(new Vector2D(250, 300), stanceSprite[0]);
 			player = new Player(new Vector2D(350, 400), playerSprite, 175, 500);
-			stanceIcon = new SpriteInfo(new Vector2D(450, 300), stanceSprite[0]);
 			iniFrameIcons(1);
 		} else {
 			iniSprites(2);
+			stanceIcon = new SpriteInfo(new Vector2D(1920 - 250 - 640, 300), stanceSprite[0]);
 			player = new Player(new Vector2D(994, 400), playerSprite, 175, 500);
-			stanceIcon = new SpriteInfo(new Vector2D(1920 - 450 - 300, 300), stanceSprite[0]);
 			iniFrameIcons(2);
 		}
 		
@@ -61,7 +61,7 @@ public class PlayerPackage extends JPanel{
 		
 		playerNumber--;
 		String[] ori = {"Left", "Right"};
-		
+	
 		for(int i = 0; i < playerSprite.length; i++){
 			int num = i + 1;
 			
@@ -120,6 +120,10 @@ public class PlayerPackage extends JPanel{
 	
 	public SpriteInfo getStanceIcon(){
 		return stanceIcon;
+	}
+	
+	public SpriteInfo getFrameIcons(int i){
+		return frameIcons[i];
 	}
 	
 	public void setStance(int i){

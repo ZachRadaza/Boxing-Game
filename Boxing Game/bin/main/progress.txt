@@ -35,3 +35,6 @@ file will keep track of the work I do on the project daily
  - added functioning health and stamina bars at the top
  - added two players with keybinds
  - fixed stance not going back up after timer bug
+6/10/25
+ - created actual stance icons to use and added them
+ - added game package to hold sprites for the game like bg, round things, and ko

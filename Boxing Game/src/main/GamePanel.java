@@ -31,6 +31,7 @@ public class GamePanel extends JPanel implements Runnable{
 	private CursorHandler cursorHandler = new CursorHandler();
 	private Thread gameThread;
 	private boolean singlePlayer;
+	private GamePackage gamePackage;
 	
 	//player fields
 	private PlayerPackage player1;
@@ -53,13 +54,31 @@ public class GamePanel extends JPanel implements Runnable{
 		}
 		this.setFocusable(true);
 
-		player1 = new PlayerPackage(true);
-		this.add(player1);
-		
-		player2 = new PlayerPackage(false);
-		this.add(player2);
-		
+		iniPlayersNGame();
+	
 		startGameThread();
+	}
+	
+	private void iniPlayersNGame(){
+		player1 = new PlayerPackage(true);
+		player2 = new PlayerPackage(false);
+		gamePackage = new GamePackage();
+		
+		this.add(gamePackage.getKO());
+		//done so players are in front due to printing order
+		this.add(player1.getPlayer());
+		this.add(player2.getPlayer());
+		
+		this.add(player1.getStanceIcon());
+		this.add(player2.getStanceIcon());
+		
+		for(int i = 0; i < 3; i++){
+			this.add(player1.getFrameIcons(i));
+			this.add(player2.getFrameIcons(i));
+		}
+		
+		this.add(gamePackage.getRound());
+		this.add(gamePackage.getRoundNumber());
 	}
 	
 	private void startGameThread(){

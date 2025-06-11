@@ -193,12 +193,10 @@ public class Actions{
 			if(player.getHands().collisionDetection(opponent.getPlayer().getColBox())){ 
 				opponent.getPlayer().adjustHealth(-damage);
 				opponent.adjustHealth();
-				System.out.println("hit");
 			}
 		}
 		
 		playerPackage.adjustStamina();
-		System.out.println(player.getStamina());
 	}
 	
 	private static void punch(PlayerPackage playerPackage, KeyHandler2Player keyHandler, PlayerPackage opponent, int i){
@@ -236,7 +234,10 @@ public class Actions{
 			if(player.getHands().collisionDetection(opponent.getPlayer().getColBox())){ 
 				opponent.getPlayer().adjustHealth(-damage);
 				opponent.adjustHealth();
-				System.out.println("hit");
+			}
+			
+			if(opponent.getPlayer().getHealth() <= 0){
+				//game over
 			}
 		}
 		

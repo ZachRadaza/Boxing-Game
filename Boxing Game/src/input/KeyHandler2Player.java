@@ -27,46 +27,46 @@ public class KeyHandler2Player implements KeyListener{
 		int key = arg0.getKeyCode();
 		
 		if(key == KeyEvent.VK_W) up[0] = true;
-		if(key == KeyEvent.VK_S) down[0] = true;
-		if(key == KeyEvent.VK_D) right[0] = true;
-		if(key == KeyEvent.VK_A) left[0] = true;
-		if(key == KeyEvent.VK_SPACE) block[0] = true;
-		if(key == KeyEvent.VK_SHIFT) shift[0] = true;
-		if(key == KeyEvent.VK_Q && leanLeft[0] == false){ 
+		else if(key == KeyEvent.VK_S) down[0] = true;
+		else if(key == KeyEvent.VK_D) right[0] = true;
+		else if(key == KeyEvent.VK_A) left[0] = true;
+		else if(key == KeyEvent.VK_SPACE) block[0] = true;
+		else if(key == KeyEvent.VK_SHIFT) shift[0] = true;
+		else if(key == KeyEvent.VK_Q && leanLeft[0] == false){ 
 			leanLeft[0] = true;
 			currentStance[0]--;
 			if(currentStance[0] < 0) currentStance[0] = 3;
 			adjustLean(0);
 		}
-		if(key == KeyEvent.VK_E && leanRight[0] == false){ 
+		else if(key == KeyEvent.VK_E && leanRight[0] == false){ 
 			leanRight[0] = true;
 			currentStance[0]++;
 			if(currentStance[0] > 3) currentStance[0] = 0;
 			adjustLean(0);
 		}
-		if(key == KeyEvent.VK_C) punchLeft[0] = true;
-		if(key == KeyEvent.VK_V) punchRight[0] = true;
+		else if(key == KeyEvent.VK_C) punchLeft[0] = true;
+		else if(key == KeyEvent.VK_V) punchRight[0] = true;
 		
 		if(key == KeyEvent.VK_5) up[1] = true;
-		if(key == KeyEvent.VK_8) down[1] = true;
-		if(key == KeyEvent.VK_6) right[1] = true;
-		if(key == KeyEvent.VK_4) left[1] = true;
-		if(key == KeyEvent.VK_0) block[1] = true;
-		if(key == KeyEvent.VK_ENTER) shift[1] = true;
-		if(key == KeyEvent.VK_7 && leanLeft[1] == false){
+		else if(key == KeyEvent.VK_8) down[1] = true;
+		else if(key == KeyEvent.VK_6) right[1] = true;
+		else if(key == KeyEvent.VK_4) left[1] = true;
+		else if(key == KeyEvent.VK_0) block[1] = true;
+		else if(key == KeyEvent.VK_ENTER) shift[1] = true;
+		else if(key == KeyEvent.VK_7 && leanLeft[1] == false){
 			leanLeft[1] = true;
 			currentStance[1]--;
 			if(currentStance[1] < 0) currentStance[1] = 3;
 			adjustLean(1);
 		}
-		if(key == KeyEvent.VK_9 && leanRight[1] == false){
+		else if(key == KeyEvent.VK_9 && leanRight[1] == false){
 			leanRight[1] = true;
 			currentStance[1]++;
 			if(currentStance[1] > 3) currentStance[1] = 0;
 			adjustLean(1);
 		}
-		if(key == KeyEvent.VK_1) punchLeft[1] = true;
-		if(key == KeyEvent.VK_2) punchRight[1] = true;
+		else if(key == KeyEvent.VK_1) punchLeft[1] = true;
+		else if(key == KeyEvent.VK_2) punchRight[1] = true;
 		
 	}
 
@@ -76,26 +76,26 @@ public class KeyHandler2Player implements KeyListener{
 		int key = arg0.getKeyCode();
 		
 		if(key == KeyEvent.VK_W) up[0] = false;
-		if(key == KeyEvent.VK_S) down[0] = false;
-		if(key == KeyEvent.VK_D) right[0] = false;
-		if(key == KeyEvent.VK_A) left[0] = false;
-		if(key == KeyEvent.VK_SPACE) block[0] = false;
-		if(key == KeyEvent.VK_SHIFT) shift[0] = false;
-		if(key == KeyEvent.VK_Q && leanLeft[0] == true) leanLeft[0] = false;
-		if(key == KeyEvent.VK_E && leanRight[0] == true) leanRight[0] = false;
-		if(key == KeyEvent.VK_C) punchLeft[0] = false;
-		if(key == KeyEvent.VK_V) punchRight[0] = false;
+		else if(key == KeyEvent.VK_S) down[0] = false;
+		else if(key == KeyEvent.VK_D) right[0] = false;
+		else if(key == KeyEvent.VK_A) left[0] = false;
+		else if(key == KeyEvent.VK_SPACE) block[0] = false;
+		else if(key == KeyEvent.VK_SHIFT) shift[0] = false;
+		else if(key == KeyEvent.VK_Q && leanLeft[0] == true) leanLeft[0] = false;
+		else if(key == KeyEvent.VK_E && leanRight[0] == true) leanRight[0] = false;
+		else if(key == KeyEvent.VK_C) punchLeft[0] = false;
+		else if(key == KeyEvent.VK_V) punchRight[0] = false;
 		
 		if(key == KeyEvent.VK_5) up[1] = false;
-		if(key == KeyEvent.VK_8) down[1] = false;
-		if(key == KeyEvent.VK_6) right[1] = false;
-		if(key == KeyEvent.VK_4) left[1] = false;
-		if(key == KeyEvent.VK_0) block[1] = false;
-		if(key == KeyEvent.VK_ENTER) shift[1] = false;
-		if(key == KeyEvent.VK_7 && leanLeft[1] == true) leanLeft[1] = false;
-		if(key == KeyEvent.VK_9 && leanRight[1] == true) leanRight[1] = false;
-		if(key == KeyEvent.VK_1) punchLeft[1] = false;
-		if(key == KeyEvent.VK_2) punchRight[1] = false;
+		else if(key == KeyEvent.VK_8) down[1] = false;
+		else if(key == KeyEvent.VK_6) right[1] = false;
+		else if(key == KeyEvent.VK_4) left[1] = false;
+		else if(key == KeyEvent.VK_0) block[1] = false;
+		else if(key == KeyEvent.VK_ENTER) shift[1] = false;
+		else if(key == KeyEvent.VK_7 && leanLeft[1] == true) leanLeft[1] = false;
+		else if(key == KeyEvent.VK_9 && leanRight[1] == true) leanRight[1] = false;
+		else if(key == KeyEvent.VK_1) punchLeft[1] = false;
+		else if(key == KeyEvent.VK_2) punchRight[1] = false;
 		
 	}
 
