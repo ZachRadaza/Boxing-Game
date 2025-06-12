@@ -64,7 +64,7 @@ public class GamePanel extends JPanel implements Runnable{
 		player2 = new PlayerPackage(false);
 		gamePackage = new GamePackage();
 		
-		this.add(gamePackage.getKO());
+		this.add(gamePackage);
 		//done so players are in front due to printing order
 		this.add(player1.getPlayer());
 		this.add(player2.getPlayer());
@@ -76,9 +76,6 @@ public class GamePanel extends JPanel implements Runnable{
 			this.add(player1.getFrameIcons(i));
 			this.add(player2.getFrameIcons(i));
 		}
-		
-		this.add(gamePackage.getRound());
-		this.add(gamePackage.getRoundNumber());
 	}
 	
 	private void startGameThread(){
@@ -131,6 +128,10 @@ public class GamePanel extends JPanel implements Runnable{
 			Actions.action(player1, keyHandler2Player, player2, 0);
 			Actions.action(player2, keyHandler2Player, player1, 1);
 		}
+		
+		gamePackage.checkRoundTimerVisible();
+		gamePackage.checkKO(player1.getPlayer(), player2.getPlayer());
+		if(gamePackage.getKOTimer() && gamePackage.getWin() != 0) gamePackage.koSwitchSprite();
 	}
 	
 	//repaints everything every second

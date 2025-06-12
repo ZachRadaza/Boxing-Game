@@ -1,7 +1,5 @@
 package sprites;
 
-import java.util.ArrayList;
-
 import collision.Body;
 import collision.CollisionBox;
 import resources.stopWatchX;
@@ -83,6 +81,10 @@ public class Player extends SpriteInfo{
 		return block;
 	}
 	
+	public boolean getDodge(){
+		return dodge;
+	}
+	
 	public int getPunch(){
 		return punch;
 	}
@@ -141,6 +143,10 @@ public class Player extends SpriteInfo{
 	
 	public void setBlock(boolean b){
 		block = b;
+	}
+	
+	public void setDodge(boolean b){
+		dodge = b;
 	}
 	
 	public void setPunch(int i){

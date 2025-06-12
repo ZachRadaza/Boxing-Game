@@ -38,3 +38,7 @@ file will keep track of the work I do on the project daily
 6/10/25
  - created actual stance icons to use and added them
  - added game package to hold sprites for the game like bg, round things, and ko
+6/11/25
+ - added player 1 and player 2 wins sprites
+ - added funcitonality to round and ko sprites
+ - added funcitonality to block and dodge mechanic

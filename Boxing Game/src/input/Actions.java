@@ -102,11 +102,13 @@ public class Actions{
 			if(blockK && !blockP){ 
 				playerPackage.setStance(player.getStance() + 1);
 				player.setBlock(true);
+				if(player.getStance() > 7) player.setDodge(true);
 			}
 			else if(!blockK && blockP){ 
 				if(player.getStance() != 0) {
 					playerPackage.setStance(player.getStance() - 1);
 					player.setBlock(false);
+					player.setDodge(false);
 				}
 			}
 		}
@@ -121,11 +123,13 @@ public class Actions{
 			if(blockK && !blockP){ 
 				playerPackage.setStance(player.getStance() + 1);
 				player.setBlock(true);
+				if(player.getStance() > 7) player.setDodge(true);
 			}
 			else if(!blockK && blockP){ 
 				if(player.getStance() != 0) {
 					playerPackage.setStance(player.getStance() - 1);
 					player.setBlock(false);
+					player.setDodge(false);
 				}
 			}
 		}
@@ -186,6 +190,13 @@ public class Actions{
 				damage = 10;
 			}
 			
+			if(opponent.getPlayer().getBlock()) damage /= 2;
+			
+			if(opponent.getPlayer().getDodge()){
+				damage = 0;
+				opponent.getPlayer().setDodge(false);
+			}
+			
 			if(player.getPunchL()) playerPackage.setStance(player.getStance() + i);
 			
 			player.setPunch(i);
@@ -227,6 +238,13 @@ public class Actions{
 				damage = 10;
 			}
 			
+			if(opponent.getPlayer().getBlock()) damage /= 2;
+			
+			if(opponent.getPlayer().getDodge()){
+				damage = 0;
+				opponent.getPlayer().setDodge(false);
+			}
+			
 			if(player.getPunchL()) playerPackage.setStance(player.getStance() + j);
 			
 			player.setPunch(j);
@@ -236,9 +254,6 @@ public class Actions{
 				opponent.adjustHealth();
 			}
 			
-			if(opponent.getPlayer().getHealth() <= 0){
-				//game over
-			}
 		}
 		
 		playerPackage.adjustStamina();
