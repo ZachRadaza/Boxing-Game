@@ -129,9 +129,9 @@ public class GamePanel extends JPanel implements Runnable{
 			Actions.action(player2, keyHandler2Player, player1, 1);
 		}
 		
-		gamePackage.checkRoundTimerVisible();
 		gamePackage.checkKO(player1.getPlayer(), player2.getPlayer());
 		if(gamePackage.getKOTimer() && gamePackage.getWin() != 0) gamePackage.koSwitchSprite();
+		if(gamePackage.checkRoundTimer()) gamePackage.resetCoords(player1.getPlayer(), player2.getPlayer());;
 	}
 	
 	//repaints everything every second

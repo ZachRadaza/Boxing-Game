@@ -12,8 +12,6 @@ public class Player extends SpriteInfo{
 	
 	//for states
 	private int stance; //stance boxer is in, + 1 is guard, + 2-3 is cross, +4-5 is hook, +6-7 is upper 0 = standard, 8 = duck, 16 = left weave, 24 = right
-	private int stanceLast; //last state player was in
-	private stopWatchX stanceL; //how long they can be in that state
 	
 	//movement
 	private boolean canDash; //if playey can dash
@@ -32,17 +30,16 @@ public class Player extends SpriteInfo{
 	
 	//other stuff
 	public int health;
-	public float stamina;
-	public float staminaRegen; //rate stamina regenerates
+	private float stamina;
+	private float staminaRegen; //rate stamina regenerates
+	private boolean left; //if it is the left player
 	
-	public Player(Vector2D vector2D, Sprite[] sprite, int width, int height){ //change sprite when changing states
+	public Player(Vector2D vector2D, Sprite[] sprite, int width, int height, boolean left){ //change sprite when changing states
 		super(vector2D, sprite[0], width, height);
 		
 		this.sprite = sprite;
 		
 		this.stance = 0;
-		this.stanceLast = stance;
-		this.stanceL = new stopWatchX(2000);
 		
 		this.canDash = true;
 		this.dashDir = false;
@@ -63,18 +60,16 @@ public class Player extends SpriteInfo{
 		this.stamina = 80f;
 		this.staminaRegen = 0.01f;
 		
+		this.left = left;
 	}
 	
 	public int getStance(){
 		return stance;
 	}
 	
-	public int getStanceLast(){
-		return stanceLast;
-	}
-	
-	public boolean getStanceL(){
-		return stanceL.isTimeUp();
+	public int getStanceSimple(){ //simplified stances, 0 for up, 1 for down, 2 for left , and 3 for right
+		return stance / 8;
+		
 	}
 	
 	public boolean getBlock(){
@@ -131,14 +126,8 @@ public class Player extends SpriteInfo{
 	
 	public void setStance(int i){
 		stance = i;
-		if(!stanceL.isTimeUp()) stanceLast = stance;
-		stanceL.resetWatch();
 		setSprite(sprite[i]);
 		adjustHitBox(i);
-	}
-	
-	public void resetStateL(){
-		stanceL.resetWatch();
 	}
 	
 	public void setBlock(boolean b){
@@ -150,10 +139,9 @@ public class Player extends SpriteInfo{
 	}
 	
 	public void setPunch(int i){
-		if(punchL.isTimeUp() && i > 0 && canPunch(i)){
-			sprite[getStance() + i].resetStopWatch();
-			setStance(getStance() + i);	
+		if(punchL.isTimeUp() && i > 0){
 			punched(i);
+			sprite[getStance() + i].resetStopWatch();
 			punchL.resetWatch();
 		} else {
 			hands.setActive(false);
@@ -197,8 +185,7 @@ public class Player extends SpriteInfo{
 	}
 	
 	public void adjustStamina(float ad){
-		if(ad > 0 && stamina < 80) stamina += ad;
-		else if(ad < 0 && stamina <= 80) stamina += ad;
+		if(stamina + ad <= 80) stamina += ad;
 	}
 	
 	public void adjustStaminaRegen(double ad){
@@ -212,39 +199,41 @@ public class Player extends SpriteInfo{
 		body.adjustVectors(new Vector2D(x, y));
 	}
 	
-	private boolean canPunch(int i){ //checks if he can punch based on stamina
+	public boolean canPunch(int i){ //checks if he can punch based on stamina
 		if(i == 2){
 			return stamina >= 5;
 		} else if (i == 3){
 			return stamina >= 10;
 		} else {
-			return stamina >= 15;
+			return stamina >= 20;
 		}
 	}
 	
 	private void punched(int i){ //when player punches
+		int adjustment = 0;
+		if(!left) adjustment = -100;
 		switch(i){
 		case 2:
 			adjustStamina(5);
 		case 3:
 			adjustStamina(-10);
 			//hitbox
-			hands.setWidth(220);
+			hands.setWidth(270);
 			hands.setHeight(100);
-			hands.adjustCoords(new Vector2D(getColBox().getX1(), getColBox().getY1() + 100));
+			hands.adjustCoords(new Vector2D(getColBox().getX1() + adjustment, getColBox().getY1() + 50));
 			hands.setActive(true);
 			break;
 		default:
-			adjustStamina(-15);
+			adjustStamina(-20);
 			//hitbox
 			if(block){
-				hands.setWidth(150);
-				hands.setHeight(100);
-			} else {
-				hands.setWidth(150);
+				hands.setWidth(220);
 				hands.setHeight(225);
+			} else {
+				hands.setWidth(220);
+				hands.setHeight(100);
 			}
-			hands.adjustCoords(new Vector2D(getColBox().getX1(), getColBox().getY1() + 100));
+			hands.adjustCoords(new Vector2D(getColBox().getX1() + adjustment, getColBox().getY1() + 50));
 			hands.setActive(true);
 			break;
 		}
@@ -256,7 +245,7 @@ public class Player extends SpriteInfo{
 			getColBox().setHeight(500);
 		} else if(i < 16){
 			getColBox().setWidth(350);
-			getColBox().setHeight(400);
+			getColBox().setHeight(380);
 		} else{
 			getColBox().setWidth(275);
 			getColBox().setHeight(450);

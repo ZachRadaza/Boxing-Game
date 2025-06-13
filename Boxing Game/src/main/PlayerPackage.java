@@ -38,12 +38,12 @@ public class PlayerPackage extends JPanel{
 		if(playerLeft){
 			iniSprites(1);
 			stanceIcon = new SpriteInfo(new Vector2D(250, 300), stanceSprite[0]);
-			player = new Player(new Vector2D(350, 400), playerSprite, 175, 500);
+			player = new Player(new Vector2D(350, 400), playerSprite, 175, 500, true);
 			iniFrameIcons(1);
 		} else {
 			iniSprites(2);
 			stanceIcon = new SpriteInfo(new Vector2D(1920 - 250 - 640, 300), stanceSprite[0]);
-			player = new Player(new Vector2D(994, 400), playerSprite, 175, 500);
+			player = new Player(new Vector2D(1094, 400), playerSprite, 175, 500, false);
 			iniFrameIcons(2);
 		}
 		

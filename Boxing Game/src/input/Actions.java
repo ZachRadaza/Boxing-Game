@@ -12,9 +12,9 @@ public class Actions{
 		if(playerPackage.getPlayer().getPunchL()){
 			stance(playerPackage, cursorHandler);
 			block(playerPackage, keyHandler);
+			punch(playerPackage, cursorHandler, keyHandler, opponent);
 		}
 		
-		punch(playerPackage, cursorHandler, keyHandler, opponent);
 	}
 	//2 player
 	public static void action(PlayerPackage playerPackage, KeyHandler2Player keyHandler, PlayerPackage opponent, int i){
@@ -24,9 +24,9 @@ public class Actions{
 		if(playerPackage.getPlayer().getPunchL()){
 			stance(playerPackage, keyHandler, i);
 			block(playerPackage, keyHandler, i);
+			punch(playerPackage, keyHandler, opponent, i);
 		}
 		
-		punch(playerPackage, keyHandler, opponent, i);
 	}
 	
 	private static void movement(PlayerPackage playerPackage, KeyHandler keyHandler, PlayerPackage opponent){
@@ -139,10 +139,9 @@ public class Actions{
 		Player player = playerPackage.getPlayer();
 		int handlerState = cursorHandler.getStance() * 8;
 		if(player.getPunchL()){
-			if(player.getStanceL() && player.getStance() > 1) playerPackage.setStance(0); //so they can stay at a state for too long, except block at standard
 		
-			if(!player.getBlock() && (player.getStanceLast() != handlerState)) playerPackage.setStance(handlerState);
-			else if (player.getBlock() && (player.getStanceLast() != handlerState + 1)) playerPackage.setStance(handlerState + 1);
+			if(!player.getBlock()) playerPackage.setStance(handlerState);
+			else if (player.getBlock()) playerPackage.setStance(handlerState + 1);
 		}
 		
 		player.adjustStamina(player.getStaminaRegen());
@@ -153,10 +152,9 @@ public class Actions{
 		int handlerState = cursorHandler.getStance(i) * 8;
 
 		if(player.getPunchL()){
-			if(player.getStanceL() && player.getStance() > 1) playerPackage.setStance(0); //so they can stay at a state for too long, except block at standard
-		
-			if(!player.getBlock() && (player.getStanceLast() != handlerState)) playerPackage.setStance(handlerState);
-			else if (player.getBlock() && (player.getStanceLast() != handlerState + 1)) playerPackage.setStance(handlerState + 1);
+
+			if(!player.getBlock()) playerPackage.setStance(handlerState);
+			else if (player.getBlock()) playerPackage.setStance(handlerState + 1);
 		}
 		
 		player.adjustStamina(player.getStaminaRegen());
@@ -167,15 +165,19 @@ public class Actions{
 		
 		int i = 0;
 		int damage = 0;
+		boolean hook = false;
+		
 		if(!cursorHandler.getLeftClick() && !cursorHandler.getRightClick()){
 			player.setPunch(0);
 		} else {
 			if(cursorHandler.getLeftClick() && keyHandler.getShift()){
 				i = 4;
-				damage = 15;
+				damage = 7;
+				hook = true;
 			} else if(cursorHandler.getRightClick() && keyHandler.getShift()){
 				i = 5;
-				damage = 15;
+				damage = 7;
+				hook = true;
 			} else if(cursorHandler.getLeftClick() && keyHandler.getBlock()){
 				i = 5;
 				damage = 15;
@@ -184,22 +186,28 @@ public class Actions{
 				damage = 15;
 			} else if(cursorHandler.getLeftClick()){ 
 				i = 2;
-				damage = 5;
+				damage = 3;
 			} else if(cursorHandler.getRightClick()){
 				i = 3;
-				damage = 10;
+				damage = 11;
 			}
 			
+			if(!player.canPunch(i)) return;
+			
 			if(opponent.getPlayer().getBlock()) damage /= 2;
+			
+			if(player.getStanceSimple() != opponent.getPlayer().getStanceSimple()) if(!hook || i != 2) damage = 0;
 			
 			if(opponent.getPlayer().getDodge()){
 				damage = 0;
 				opponent.getPlayer().setDodge(false);
 			}
 			
-			if(player.getPunchL()) playerPackage.setStance(player.getStance() + i);
+			if(player.getStanceSimple() != opponent.getPlayer().getStanceSimple()) damage = 0;
 			
 			player.setPunch(i);
+			
+			playerPackage.setStance(player.getStance() + i);
 			
 			if(player.getHands().collisionDetection(opponent.getPlayer().getColBox())){ 
 				opponent.getPlayer().adjustHealth(-damage);
@@ -208,6 +216,7 @@ public class Actions{
 		}
 		
 		playerPackage.adjustStamina();
+
 	}
 	
 	private static void punch(PlayerPackage playerPackage, KeyHandler2Player keyHandler, PlayerPackage opponent, int i){
@@ -215,15 +224,19 @@ public class Actions{
 		
 		int j = 0;
 		int damage = 0;
+		boolean hook = false;
+		
 		if(!keyHandler.getPunchLeft(i) && !keyHandler.getPunchRight(i)){
 			player.setPunch(0);
 		} else {
 			if(keyHandler.getPunchLeft(i) && keyHandler.getShift(i)){
 				j = 4;
-				damage = 15;
+				damage = 7;
+				hook = true;
 			} else if(keyHandler.getPunchRight(i) && keyHandler.getShift(i)){
 				j = 5;
-				damage = 15;
+				damage = 7;
+				hook = true;
 			} else if(keyHandler.getPunchLeft(i) && keyHandler.getBlock(i)){
 				j = 5;
 				damage = 15;
@@ -232,22 +245,26 @@ public class Actions{
 				damage = 15;
 			} else if(keyHandler.getPunchLeft(i)){ 
 				j = 2;
-				damage = 5;
+				damage = 3;
 			} else if(keyHandler.getPunchRight(i)){
 				j = 3;
-				damage = 10;
+				damage = 11;
 			}
 			
+			if(!player.canPunch(j)) return;
+			
 			if(opponent.getPlayer().getBlock()) damage /= 2;
+			
+			if(player.getStanceSimple() != opponent.getPlayer().getStanceSimple()) if(!hook || j != 2) damage = 0;
 			
 			if(opponent.getPlayer().getDodge()){
 				damage = 0;
 				opponent.getPlayer().setDodge(false);
 			}
 			
-			if(player.getPunchL()) playerPackage.setStance(player.getStance() + j);
-			
 			player.setPunch(j);
+			
+			playerPackage.setStance(player.getStance() + j);
 			
 			if(player.getHands().collisionDetection(opponent.getPlayer().getColBox())){ 
 				opponent.getPlayer().adjustHealth(-damage);
