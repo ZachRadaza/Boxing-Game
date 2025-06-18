@@ -7,6 +7,8 @@ public class Actions{
 	//single player
 	public static void action(PlayerPackage playerPackage, KeyHandler keyHandler, CursorHandler cursorHandler, PlayerPackage opponent){
 		
+		if(playerPackage.getPlayer().getHealth() <= 0) return;
+		
 		movement(playerPackage, keyHandler, opponent);
 		
 		if(playerPackage.getPlayer().getPunchL()){
@@ -18,6 +20,8 @@ public class Actions{
 	}
 	//2 player
 	public static void action(PlayerPackage playerPackage, KeyHandler2Player keyHandler, PlayerPackage opponent, int i){
+		
+		if(playerPackage.getPlayer().getHealth() <= 0) return;
 		
 		movement(playerPackage, keyHandler, opponent, i);
 		
@@ -89,7 +93,9 @@ public class Actions{
 				player.setDashDir(false);
 			}
 		}
-		if(keyHandler.getRight(i) && player.getBody().getRight()) player.updateCoords(x + 2, y);
+		if(keyHandler.getRight(i) && player.getBody().getRight()){
+			player.updateCoords(x + 2, y);
+		}
 		if(keyHandler.getLeft(i) && player.getBody().getLeft()) player.updateCoords(x - 2, y);
 	}
 	

@@ -72,6 +72,10 @@ public class Player extends SpriteInfo{
 		
 	}
 	
+	public Sprite getSprite(int i){
+		return sprite[i];
+	}
+	
 	public boolean getBlock(){
 		return block;
 	}

@@ -48,3 +48,7 @@ file will keep track of the work I do on the project daily
  - added stance hit system so its like for honor but opposite
  - adjusted hitboxes
  - added round system and timer
+6/17/2025
+ - optimized game for better frames
+ - added ko and background sprites
+ -fin

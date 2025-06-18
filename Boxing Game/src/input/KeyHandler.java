@@ -25,6 +25,7 @@ public class KeyHandler implements KeyListener{
 		else if(key == KeyEvent.VK_A) left = true;
 		else if(key == KeyEvent.VK_SPACE) block = true;
 		else if(key == KeyEvent.VK_SHIFT) shift = true;
+		
 	}
 
 	@Override
@@ -38,6 +39,7 @@ public class KeyHandler implements KeyListener{
 		else if(key == KeyEvent.VK_A) left = false;
 		else if(key == KeyEvent.VK_SPACE) block = false;
 		else if(key == KeyEvent.VK_SHIFT) shift = false;
+		
 	}
 
 	@Override

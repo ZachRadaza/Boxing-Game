@@ -28,7 +28,6 @@ public class GamePackage extends JPanel{
 	private stopWatchX koTimer;
 	
 	private SpriteInfo background;
-	private SpriteInfo ring;
 	
 	private int win; //0 is nobody won, 1 is player 1 won, 2 is etc
 	
@@ -46,8 +45,18 @@ public class GamePackage extends JPanel{
 		roundTimer = new stopWatchX(1000);
 		koTimer = new stopWatchX(2500);
 		
+		iniSprites();
+		
+		this.add(ko);
+		this.add(roundSprite);
+		this.add(roundNumber);
+		this.add(background);
+	}
+	
+	private void iniSprites(){
+		background = new SpriteInfo(new Vector2D(0, -40), new Sprite("Art/ResourceSprites/background.png"));
+		
 		roundSprite = new SpriteInfo(new Vector2D((1920/2) - (640 / 2) - 100, 300), new Sprite("Art/ResourceSprites/round.png"));
-		roundSprite.setBounds(0, 0, 1920,1080);
 		
 		roundNumberSprite = new Sprite[3];
 		for(int i = 0; i < roundNumberSprite.length; i++){
@@ -64,13 +73,10 @@ public class GamePackage extends JPanel{
 		ko = new SpriteInfo(new Vector2D((1920/2) - (640 / 2), 300), koSprite[0]);
 		ko.setVisible(false);
 		
+		background.setBounds(0, 0, 1920, 1080);
 		roundSprite.setBounds(0, 0, 1920,1080);
 		roundNumber.setBounds(0, 0, 1920,1080);
 		ko.setBounds(0, 0, 1920,1080);
-		
-		this.add(ko);
-		this.add(roundSprite);
-		this.add(roundNumber);
 	}
 	
 	public void setRoundNumber(int i){
@@ -80,6 +86,10 @@ public class GamePackage extends JPanel{
 	
 	public int getWin(){
 		return win;
+	}
+	
+	public SpriteInfo getBG(){
+		return background;
 	}
 	
 	public SpriteInfo getRoundSprite(){
@@ -136,11 +146,15 @@ public class GamePackage extends JPanel{
 			ko.setVisible(true);
 			koTimer.resetWatch();
 			win = 2;
+			player1.getSprite(32).resetStopWatch();
+			player1.setStance(32);
 			end();
 		} else if(player2.getHealth() <= 0 && win == 0){
 			ko.setVisible(true);
 			koTimer.resetWatch();
 			win = 1;
+			player1.getSprite(32).resetStopWatch();
+			player2.setStance(32);
 			end();
 		}
 	}
@@ -148,6 +162,8 @@ public class GamePackage extends JPanel{
 	public void resetCoords(Player player1, Player player2){
 		player1.updateCoords(350, 400);
 		player2.updateCoords(1094, 400);
+		player1.setStamina(80);
+		player2.setStamina(80);
 	}
 	
 	public void end(){ //exists game

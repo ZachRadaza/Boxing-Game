@@ -56,7 +56,7 @@ public class PlayerPackage extends JPanel{
 	}
 	
 	private void iniSprites(int playerNumber){ //1 or 2
-		playerSprite = new Sprite[32];
+		playerSprite = new Sprite[33];
 		int temp = 0;
 		
 		playerNumber--;
@@ -65,6 +65,11 @@ public class PlayerPackage extends JPanel{
 		for(int i = 0; i < playerSprite.length; i++){
 			int num = i + 1;
 			
+			if(i + 1 == playerSprite.length){
+				playerSprite[i] = new Sprite("Art/PlayerSprite" + ori[playerNumber] + "/Boxer" + ori[playerNumber] + num + "1.png", "Art/PlayerSprite" + ori[playerNumber] + "/Boxer" + ori[playerNumber] + num + "2.png", true);
+				break;
+			}
+			
 			if(temp == 8) temp = 0;
 			if(temp == 0 || temp == 1) playerSprite[i] = new Sprite("Art/PlayerSprite" + ori[playerNumber] + "/Boxer" + ori[playerNumber] + num + "1.png", 
 					"Art/PlayerSprite" + ori[playerNumber] + "/Boxer" + ori[playerNumber] + num + "2.png", 
@@ -72,6 +77,7 @@ public class PlayerPackage extends JPanel{
 			else playerSprite[i] = new Sprite("Art/PlayerSprite" + ori[playerNumber] + "/Boxer" + ori[playerNumber] + num + "1.png", "Art/PlayerSprite" + ori[playerNumber] + "/Boxer" + ori[playerNumber] + num + "2.png");
 			
 			temp++;
+		
 		}
 		
 		stanceSprite = new Sprite[32];

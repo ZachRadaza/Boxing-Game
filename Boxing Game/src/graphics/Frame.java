@@ -24,7 +24,7 @@ public class Frame extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setBackground(bgColor);
 		
-		//this.setResizable(false);
+		this.setResizable(false);
 		
 		ImageIcon image = new ImageIcon(""); //add a pixel glove
 		this.setIconImage(image.getImage());

@@ -3,6 +3,8 @@ package main;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
@@ -42,21 +44,29 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setLayout(null);
 		this.setBackground(Color.BLACK);
 		this.setDoubleBuffered(true);
+		this.setFocusable(true);
+		this.requestFocusInWindow();
 		
 		this.singlePlayer = singlePlayer;
+
+		iniPlayersNGame();
 		
 		if(singlePlayer){
 			this.addKeyListener(keyHandler);
 			this.add(cursorHandler);
 		} else {
 			this.addKeyListener(keyHandler2Player);
-			this.setFocusable(true);
 		}
-		this.setFocusable(true);
-
-		iniPlayersNGame();
-	
+		
 		startGameThread();
+		
+		//to make keyboard work
+		this.addMouseListener(new MouseAdapter() {
+		    public void mousePressed(MouseEvent e) {
+		        requestFocusInWindow();
+		    }
+		});
+		
 	}
 	
 	private void iniPlayersNGame(){
@@ -64,18 +74,24 @@ public class GamePanel extends JPanel implements Runnable{
 		player2 = new PlayerPackage(false);
 		gamePackage = new GamePackage();
 		
-		this.add(gamePackage);
+		this.add(gamePackage.getRoundNumber());
+		this.add(gamePackage.getRoundSprite());
+		this.add(gamePackage.getKO());
+		
 		//done so players are in front due to printing order
 		this.add(player1.getPlayer());
 		this.add(player2.getPlayer());
 		
+		for(int i = 0; i < 3; i++){
+		this.add(player1.getFrameIcons(i));
+		this.add(player2.getFrameIcons(i));
+		}
+		
 		this.add(player1.getStanceIcon());
 		this.add(player2.getStanceIcon());
 		
-		for(int i = 0; i < 3; i++){
-			this.add(player1.getFrameIcons(i));
-			this.add(player2.getFrameIcons(i));
-		}
+		this.add(gamePackage.getBG());
+		
 	}
 	
 	private void startGameThread(){
@@ -83,21 +99,24 @@ public class GamePanel extends JPanel implements Runnable{
 		gameThread.start();
 	}
 
+	
 	//runs when thread starts
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		start();
 		
-		double drawInterval = 1000000000/fps;
+		final double drawInterval = 1000000000.0 / fps; // nanoseconds
 		double nextDrawTime = System.nanoTime() + drawInterval;
+
 		
 		while(gameThread != null){
 			
 			update();
 			
 			repaint();
-			
+				
+				
 			//pauses to not make it refresh so fast
 			try {
 				double remainingTime = nextDrawTime - System.nanoTime();
@@ -114,9 +133,6 @@ public class GamePanel extends JPanel implements Runnable{
 				e.printStackTrace();
 			}
 			
-			this.setVisible(true);
-			this.revalidate();
-			this.repaint();
 		}
 		
 	}
@@ -131,7 +147,9 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		gamePackage.checkKO(player1.getPlayer(), player2.getPlayer());
 		if(gamePackage.getKOTimer() && gamePackage.getWin() != 0) gamePackage.koSwitchSprite();
-		if(gamePackage.checkRoundTimer()) gamePackage.resetCoords(player1.getPlayer(), player2.getPlayer());;
+		if(gamePackage.checkRoundTimer()) gamePackage.resetCoords(player1.getPlayer(), player2.getPlayer());
+		
+		if(keyHandler.getBlock()) System.out.println("block");
 	}
 	
 	//repaints everything every second
@@ -142,7 +160,9 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//loads everthing at the start
 	private void start(){
-		
+		this.setVisible(true);
+		this.revalidate();
+		this.repaint();
 	}
 	
 }

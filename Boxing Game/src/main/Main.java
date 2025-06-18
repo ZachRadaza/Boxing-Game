@@ -12,7 +12,8 @@ public class Main{
 	
 	private static Frame setFrame(){
 		GamePanel panel = new GamePanel(false);
-		frame.add(panel);
+		frame.setContentPane(panel);
+		frame.pack();
 		
 		return frame;
 	}
