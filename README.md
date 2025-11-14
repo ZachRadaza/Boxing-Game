@@ -52,6 +52,7 @@ This project challenged me to build everything from the ground up—engine, grap
    java -cp bin main.Main
 
 ##Project Structure
+```plaintext
 Boxing Game/
  ├── .settings/        # Eclipse settings
  ├── Art/              # Original sprites & icons
@@ -74,3 +75,5 @@ Boxing Game/
      ├── main/         # Contains Main.java (entry point)
      ├── resources/
      └── sprites/
+
+```
